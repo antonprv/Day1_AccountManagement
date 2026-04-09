@@ -113,7 +113,7 @@ jobs:
             ### Состав релиза
             | Архив | Описание |
             |-------|---------|
-            | `AccountManager-build-${{ github.run_number }}.zip` | Калькулятор (.NET Framework 4.7) |
+            | `AccountManager-build-${{ github.run_number }}.zip` | Менеджер записей пользователей (.NET Framework 4.7) |
 
             ### Быстрый старт
             1. Распакуйте `AccountManager-*.zip`, запустите `AccountManager.exe`.
