@@ -46,31 +46,19 @@ namespace AccountManager.Forms
       this.labelBirthDate = new System.Windows.Forms.Label();
       this.birthDatePicker = new System.Windows.Forms.DateTimePicker();
       this.buttonPanel = new System.Windows.Forms.Panel();
-      this.saveButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
+      this.saveButton = new System.Windows.Forms.Button();
       this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-
       this.tableLayout.SuspendLayout();
       this.buttonPanel.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
       this.SuspendLayout();
-
-      // ── tableLayout ────────────────────────────────────────────
-      // Две колонки: Label (авто) + TextBox (заполняет остаток)
-      // Пять строк — по одной на каждое поле
+      // 
+      // tableLayout
+      // 
       this.tableLayout.ColumnCount = 2;
-      this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(
-          System.Windows.Forms.SizeType.Absolute, 110F));
-      this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(
-          System.Windows.Forms.SizeType.Percent, 100F));
-
-      this.tableLayout.RowCount = 5;
-      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-
+      this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+      this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayout.Controls.Add(this.labelFirstName, 0, 0);
       this.tableLayout.Controls.Add(this.firstNameBox, 1, 0);
       this.tableLayout.Controls.Add(this.labelLastName, 0, 1);
@@ -81,81 +69,142 @@ namespace AccountManager.Forms
       this.tableLayout.Controls.Add(this.phoneBox, 1, 3);
       this.tableLayout.Controls.Add(this.labelBirthDate, 0, 4);
       this.tableLayout.Controls.Add(this.birthDatePicker, 1, 4);
-
       this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayout.Padding = new System.Windows.Forms.Padding(10);
+      this.tableLayout.Location = new System.Drawing.Point(0, 0);
       this.tableLayout.Name = "tableLayout";
-
-      // ── Labels ─────────────────────────────────────────────────
-      this.labelFirstName.Text = "Имя:";
+      this.tableLayout.Padding = new System.Windows.Forms.Padding(10);
+      this.tableLayout.RowCount = 5;
+      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+      this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+      this.tableLayout.Size = new System.Drawing.Size(380, 215);
+      this.tableLayout.TabIndex = 0;
+      // 
+      // labelFirstName
+      // 
       this.labelFirstName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelFirstName.Location = new System.Drawing.Point(13, 18);
       this.labelFirstName.Name = "labelFirstName";
-
-      this.labelLastName.Text = "Фамилия:";
-      this.labelLastName.Anchor = System.Windows.Forms.AnchorStyles.Left;
-      this.labelLastName.Name = "labelLastName";
-
-      this.labelEmail.Text = "Email:";
-      this.labelEmail.Anchor = System.Windows.Forms.AnchorStyles.Left;
-      this.labelEmail.Name = "labelEmail";
-
-      this.labelPhone.Text = "Телефон:";
-      this.labelPhone.Anchor = System.Windows.Forms.AnchorStyles.Left;
-      this.labelPhone.Name = "labelPhone";
-
-      this.labelBirthDate.Text = "Дата рождения:";
-      this.labelBirthDate.Anchor = System.Windows.Forms.AnchorStyles.Left;
-      this.labelBirthDate.Name = "labelBirthDate";
-
-      // ── TextBox-ы ──────────────────────────────────────────────
-      // Общие настройки: Anchor = Left|Right чтобы тянулись по ширине колонки
-      System.Windows.Forms.AnchorStyles fillRow =
-          System.Windows.Forms.AnchorStyles.Left |
-          System.Windows.Forms.AnchorStyles.Right;
-
-      this.firstNameBox.Anchor = fillRow;
+      this.labelFirstName.Size = new System.Drawing.Size(100, 23);
+      this.labelFirstName.TabIndex = 0;
+      this.labelFirstName.Text = "Имя:";
+      // 
+      // firstNameBox
+      // 
+      this.firstNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.firstNameBox.Location = new System.Drawing.Point(123, 17);
       this.firstNameBox.Name = "firstNameBox";
-
-      this.lastNameBox.Anchor = fillRow;
+      this.firstNameBox.Size = new System.Drawing.Size(244, 26);
+      this.firstNameBox.TabIndex = 1;
+      // 
+      // labelLastName
+      // 
+      this.labelLastName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelLastName.Location = new System.Drawing.Point(13, 58);
+      this.labelLastName.Name = "labelLastName";
+      this.labelLastName.Size = new System.Drawing.Size(100, 23);
+      this.labelLastName.TabIndex = 2;
+      this.labelLastName.Text = "Фамилия:";
+      // 
+      // lastNameBox
+      // 
+      this.lastNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.lastNameBox.Location = new System.Drawing.Point(123, 57);
       this.lastNameBox.Name = "lastNameBox";
-
-      this.emailBox.Anchor = fillRow;
+      this.lastNameBox.Size = new System.Drawing.Size(244, 26);
+      this.lastNameBox.TabIndex = 3;
+      // 
+      // labelEmail
+      // 
+      this.labelEmail.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelEmail.Location = new System.Drawing.Point(13, 98);
+      this.labelEmail.Name = "labelEmail";
+      this.labelEmail.Size = new System.Drawing.Size(100, 23);
+      this.labelEmail.TabIndex = 4;
+      this.labelEmail.Text = "Email:";
+      // 
+      // emailBox
+      // 
+      this.emailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.emailBox.Location = new System.Drawing.Point(123, 97);
       this.emailBox.Name = "emailBox";
-
-      this.phoneBox.Anchor = fillRow;
+      this.emailBox.Size = new System.Drawing.Size(244, 26);
+      this.emailBox.TabIndex = 5;
+      // 
+      // labelPhone
+      // 
+      this.labelPhone.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelPhone.Location = new System.Drawing.Point(13, 138);
+      this.labelPhone.Name = "labelPhone";
+      this.labelPhone.Size = new System.Drawing.Size(100, 23);
+      this.labelPhone.TabIndex = 6;
+      this.labelPhone.Text = "Телефон:";
+      // 
+      // phoneBox
+      // 
+      this.phoneBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.phoneBox.Location = new System.Drawing.Point(123, 137);
       this.phoneBox.Name = "phoneBox";
-
-      // ── birthDatePicker ────────────────────────────────────────
-      this.birthDatePicker.Anchor = fillRow;
+      this.phoneBox.Size = new System.Drawing.Size(244, 26);
+      this.phoneBox.TabIndex = 7;
+      // 
+      // labelBirthDate
+      // 
+      this.labelBirthDate.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelBirthDate.Location = new System.Drawing.Point(13, 178);
+      this.labelBirthDate.Name = "labelBirthDate";
+      this.labelBirthDate.Size = new System.Drawing.Size(100, 23);
+      this.labelBirthDate.TabIndex = 8;
+      this.labelBirthDate.Text = "Дата рождения:";
+      // 
+      // birthDatePicker
+      // 
+      this.birthDatePicker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
       this.birthDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+      this.birthDatePicker.Location = new System.Drawing.Point(123, 177);
       this.birthDatePicker.Name = "birthDatePicker";
-
-      // ── buttonPanel ────────────────────────────────────────────
+      this.birthDatePicker.Size = new System.Drawing.Size(244, 26);
+      this.birthDatePicker.TabIndex = 9;
+      // 
+      // buttonPanel
+      // 
       this.buttonPanel.Controls.Add(this.cancelButton);
       this.buttonPanel.Controls.Add(this.saveButton);
       this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.buttonPanel.Height = 45;
+      this.buttonPanel.Location = new System.Drawing.Point(0, 215);
       this.buttonPanel.Name = "buttonPanel";
       this.buttonPanel.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
-
-      // ── saveButton ─────────────────────────────────────────────
-      this.saveButton.Text = "Сохранить";
-      this.saveButton.Dock = System.Windows.Forms.DockStyle.Right;
-      this.saveButton.Width = 110;
-      this.saveButton.Name = "saveButton";
-      this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
-
-      // ── cancelButton ───────────────────────────────────────────
-      this.cancelButton.Text = "Отмена";
+      this.buttonPanel.Size = new System.Drawing.Size(380, 45);
+      this.buttonPanel.TabIndex = 1;
+      // 
+      // cancelButton
+      // 
       this.cancelButton.Dock = System.Windows.Forms.DockStyle.Right;
-      this.cancelButton.Width = 90;
+      this.cancelButton.Location = new System.Drawing.Point(170, 5);
       this.cancelButton.Name = "cancelButton";
+      this.cancelButton.Size = new System.Drawing.Size(90, 35);
+      this.cancelButton.TabIndex = 0;
+      this.cancelButton.Text = "Отмена";
       this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
-
-      // ── errorProvider ──────────────────────────────────────────
+      // 
+      // saveButton
+      // 
+      this.saveButton.Dock = System.Windows.Forms.DockStyle.Right;
+      this.saveButton.Location = new System.Drawing.Point(260, 5);
+      this.saveButton.Name = "saveButton";
+      this.saveButton.Size = new System.Drawing.Size(110, 35);
+      this.saveButton.TabIndex = 1;
+      this.saveButton.Text = "Сохранить";
+      this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
+      // 
+      // errorProvider
+      // 
       this.errorProvider.ContainerControl = this;
-
-      // ── UserEditForm ───────────────────────────────────────────
+      // 
+      // UserEditForm
+      // 
       this.ClientSize = new System.Drawing.Size(380, 260);
       this.Controls.Add(this.tableLayout);
       this.Controls.Add(this.buttonPanel);
@@ -164,13 +213,14 @@ namespace AccountManager.Forms
       this.MinimizeBox = false;
       this.Name = "UserEditForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "Пользователь";   // переопределяется в конструкторе
-
+      this.Text = "Пользователь";
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UserEditForm_FormClosed);
       this.tableLayout.ResumeLayout(false);
       this.tableLayout.PerformLayout();
       this.buttonPanel.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
       this.ResumeLayout(false);
+
     }
 
     #endregion

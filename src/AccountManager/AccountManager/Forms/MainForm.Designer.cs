@@ -1,6 +1,6 @@
 using System;
 
-namespace AccountManager
+namespace AccountManager.Forms
 {
   partial class MainForm
   {
@@ -46,6 +46,7 @@ namespace AccountManager
       // 
       // toolStrip
       // 
+      this.toolStrip.CanOverflow = false;
       this.toolStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
       this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addButton,
@@ -90,25 +91,31 @@ namespace AccountManager
       // searchBox
       // 
       this.searchBox.Name = "searchBox";
-      this.searchBox.Size = new System.Drawing.Size(200, 34);
-      this.searchBox.Text = "Поиск...";
+      this.searchBox.Size = new System.Drawing.Size(450, 34);
+      this.searchBox.Text = "Поиск по имени, фамилии, email, телефону...";
+      this.searchBox.Leave += new System.EventHandler(this.SearchBox_Leave);
+      this.searchBox.Click += new System.EventHandler(this.SearchBox_Click);
       this.searchBox.TextChanged += new System.EventHandler(this.SearchBox_TextChanged);
       // 
       // dataGridView
       // 
       this.dataGridView.AllowUserToAddRows = false;
       this.dataGridView.AllowUserToDeleteRows = false;
+      this.dataGridView.AllowUserToResizeColumns = false;
+      this.dataGridView.AllowUserToResizeRows = false;
       this.dataGridView.ColumnHeadersHeight = 34;
       this.dataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridView.Location = new System.Drawing.Point(0, 34);
-      this.dataGridView.MultiSelect = false;
       this.dataGridView.Name = "dataGridView";
       this.dataGridView.ReadOnly = true;
-      this.dataGridView.RowHeadersVisible = false;
       this.dataGridView.RowHeadersWidth = 62;
-      this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+      this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
       this.dataGridView.Size = new System.Drawing.Size(900, 484);
       this.dataGridView.TabIndex = 1;
+      this.dataGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_ColumnHeaderMouseClick);
+      this.dataGridView.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_RowHeaderMouseClick);
+      this.dataGridView.SelectionChanged += new System.EventHandler(this.DataGridView_SelectionChanged);
       // 
       // statusStrip
       // 
@@ -132,6 +139,7 @@ namespace AccountManager
       this.Controls.Add(this.dataGridView);
       this.Controls.Add(this.toolStrip);
       this.Controls.Add(this.statusStrip);
+      this.MinimumSize = new System.Drawing.Size(922, 606);
       this.Name = "MainForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Менеджер пользователей";

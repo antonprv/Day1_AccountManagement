@@ -95,6 +95,7 @@ namespace AccountManager.Forms
       this.Name = "DeleteDialog";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Удаление пользователя";
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DeleteDialog_FormClosed);
       this.buttonPanel.ResumeLayout(false);
       this.ResumeLayout(false);
 

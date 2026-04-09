@@ -15,12 +15,20 @@ namespace AccountManager.Forms
 
     private void CancelButton_Click(object sender, EventArgs e)
     {
-      throw new NotImplementedException();
+      DialogResult = DialogResult.Cancel;
+      Close();
     }
 
     private void ConfirmButton_Click(object sender, EventArgs e)
     {
-      throw new NotImplementedException();
+      DialogResult = DialogResult.OK;
+      Close();
+    }
+
+    private void DeleteDialog_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      cancelButton.Click -= CancelButton_Click;
+      confirmButton.Click -= ConfirmButton_Click;
     }
   }
 }
