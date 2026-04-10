@@ -2,101 +2,123 @@
 // Any direct commercial use of derivative work is strictly prohibited.
 
 using System;
-using System.Globalization;
+using System.Linq;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace AccountManager.Services
 {
   internal static class Validator
   {
-    public static bool IsValidEmail(string email)
+    public static bool IsValidEmailMailAddress(string email, out string error)
     {
+      error = null;
+
       if (string.IsNullOrWhiteSpace(email))
+      {
+        error = ErrorMessages.EmailEmpty;
         return false;
+      }
+
+      if (email.Length > 254)
+      {
+        error = ErrorMessages.EmailTooLong;
+        return false;
+      }
 
       try
       {
-        // Normalize the domain
-        email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
-                              RegexOptions.None, TimeSpan.FromMilliseconds(200));
+        var addr = new MailAddress(email);
 
-        // Examines the domain part of the email and normalizes it.
-        string DomainMapper(Match match)
+        if (addr.Address != email)
         {
-          // Use IdnMapping class to convert Unicode domain names.
-          var idn = new IdnMapping();
-
-          // Pull out and process domain name (throws ArgumentException on invalid)
-          string domainName = idn.GetAscii(match.Groups[2].Value);
-
-          return match.Groups[1].Value + domainName;
+          error = ErrorMessages.EmailInvalidChars;
+          return false;
         }
-      }
-      catch (RegexMatchTimeoutException e)
-      {
-        return false;
-      }
-      catch (ArgumentException e)
-      {
-        return false;
-      }
 
-      try
-      {
-        return Regex.IsMatch(email,
-            @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-            RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+        if (!addr.Host.Contains('.'))
+        {
+          error = ErrorMessages.EmailInvalidDomain;
+          return false;
+        }
+
+        return true;
       }
-      catch (RegexMatchTimeoutException)
+      catch (FormatException)
       {
+        error = ErrorMessages.EmailInvalidFormat;
         return false;
       }
     }
 
-    public static bool IsValidPhone(string phone)
+    public static bool IsValidPhone(string phone, out string error)
     {
+      error = null;
+
       if (string.IsNullOrWhiteSpace(phone))
+      {
+        error = ErrorMessages.PhoneEmpty;
         return false;
+      }
 
       try
       {
-        // Разделитель: пробел | тире | пробел-тире-пробел
         string sep = @"( |-| - )";
-
-        // Префикс: +код(1-4 цифры) ИЛИ 8
         string prefix = @"(\+\d{1,4}|8)";
 
-        // Вариант 1: с разделителями
         string withSeparators =
             $@"^{prefix}{sep}\d{{3}}{sep}\d{{3}}{sep}\d{{2}}{sep}\d{{2}}$";
 
-        // Вариант 2: только цифры
         string noSeparators =
-            $@"^{prefix}\d{{9,13}}$"; // чтобы суммарно было 10–14 цифр
+            $@"^{prefix}\d{{9,13}}$";
 
-        return Regex.IsMatch(phone, withSeparators, RegexOptions.None, TimeSpan.FromMilliseconds(200))
-            || Regex.IsMatch(phone, noSeparators, RegexOptions.None, TimeSpan.FromMilliseconds(200));
+        bool isValid =
+            Regex.IsMatch(phone, withSeparators, RegexOptions.None, TimeSpan.FromMilliseconds(200)) ||
+            Regex.IsMatch(phone, noSeparators, RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+        if (!isValid)
+        {
+          error = ErrorMessages.PhoneInvalidFormat;
+          return false;
+        }
+
+        return true;
       }
       catch (RegexMatchTimeoutException)
       {
+        error = ErrorMessages.PhoneTimeout;
         return false;
       }
     }
 
-    public static bool IsValidName(string name)
+    public static bool IsValidName(string name, out string error)
     {
+      error = null;
+
       if (string.IsNullOrWhiteSpace(name))
+      {
+        error = ErrorMessages.NameEmpty;
         return false;
+      }
 
       try
       {
-        return Regex.IsMatch(name,
+        bool isValid = Regex.IsMatch(name,
             @"^[a-zA-Zа-яА-ЯёЁ]+([\-'\s][a-zA-Zа-яА-ЯёЁ]+)*$",
             RegexOptions.None,
             TimeSpan.FromMilliseconds(200));
+
+        if (!isValid)
+        {
+          error = ErrorMessages.NameInvalid;
+          return false;
+        }
+
+        return true;
       }
       catch (RegexMatchTimeoutException)
       {
+        error = ErrorMessages.NameTimeout;
         return false;
       }
     }

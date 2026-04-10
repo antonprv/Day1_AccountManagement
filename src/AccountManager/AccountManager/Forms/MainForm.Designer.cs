@@ -90,6 +90,7 @@ namespace AccountManager.Forms
       // 
       // searchBox
       // 
+      this.searchBox.CausesValidation = false;
       this.searchBox.Name = "searchBox";
       this.searchBox.Size = new System.Drawing.Size(450, 34);
       this.searchBox.Text = "Поиск по имени, фамилии, email, телефону...";

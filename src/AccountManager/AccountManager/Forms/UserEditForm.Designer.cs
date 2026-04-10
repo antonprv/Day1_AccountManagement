@@ -94,11 +94,11 @@ namespace AccountManager.Forms
       // firstNameBox
       // 
       this.firstNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.firstNameBox.CausesValidation = false;
       this.firstNameBox.Location = new System.Drawing.Point(123, 17);
       this.firstNameBox.Name = "firstNameBox";
       this.firstNameBox.Size = new System.Drawing.Size(244, 26);
       this.firstNameBox.TabIndex = 1;
-      this.firstNameBox.Validating += new System.ComponentModel.CancelEventHandler(this.FirstNameBox_Validating);
       // 
       // labelLastName
       // 
@@ -112,11 +112,11 @@ namespace AccountManager.Forms
       // lastNameBox
       // 
       this.lastNameBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.lastNameBox.CausesValidation = false;
       this.lastNameBox.Location = new System.Drawing.Point(123, 57);
       this.lastNameBox.Name = "lastNameBox";
       this.lastNameBox.Size = new System.Drawing.Size(244, 26);
       this.lastNameBox.TabIndex = 3;
-      this.lastNameBox.Validating += new System.ComponentModel.CancelEventHandler(this.LastNameBox_Validating);
       // 
       // labelEmail
       // 
@@ -130,11 +130,11 @@ namespace AccountManager.Forms
       // emailBox
       // 
       this.emailBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.emailBox.CausesValidation = false;
       this.emailBox.Location = new System.Drawing.Point(123, 97);
       this.emailBox.Name = "emailBox";
       this.emailBox.Size = new System.Drawing.Size(244, 26);
       this.emailBox.TabIndex = 5;
-      this.emailBox.Validating += new System.ComponentModel.CancelEventHandler(this.EmailBox_Validating);
       // 
       // labelPhone
       // 
@@ -148,11 +148,11 @@ namespace AccountManager.Forms
       // phoneBox
       // 
       this.phoneBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+      this.phoneBox.CausesValidation = false;
       this.phoneBox.Location = new System.Drawing.Point(123, 137);
       this.phoneBox.Name = "phoneBox";
       this.phoneBox.Size = new System.Drawing.Size(244, 26);
       this.phoneBox.TabIndex = 7;
-      this.phoneBox.Validating += new System.ComponentModel.CancelEventHandler(this.PhoneBox_Validating);
       // 
       // labelBirthDate
       // 

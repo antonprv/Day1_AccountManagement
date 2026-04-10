@@ -67,6 +67,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ErrorMessages.cs" />
     <Compile Include="Services\UserXMLService.cs" />
     <Compile Include="Services\Validator.cs" />
     <EmbeddedResource Include="Forms\DeleteDialog.resx">

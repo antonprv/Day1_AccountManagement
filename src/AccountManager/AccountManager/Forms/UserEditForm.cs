@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using AccountManager.Properties;
 using AccountManager.Services;
 
 namespace AccountManager.Forms
@@ -15,18 +16,17 @@ namespace AccountManager.Forms
 
     private Models.User _userResult;
 
-    private Dictionary<string, KeyValuePair<string, bool>> _fields;
+    private readonly Dictionary<string, string> _fieldErrors;
 
-    private bool _validFirstName;
-    private bool _validLastName;
-    private bool _validEmail;
-    private bool _validPhone;
+    private delegate bool ValidatorDelegate(string input, out string error);
 
     public UserEditForm()
     {
       InitializeComponent();
 
       Text = "Добавить пользователя";
+
+      _fieldErrors = new Dictionary<string, string>();
     }
 
     public UserEditForm(Models.User user)
@@ -55,88 +55,75 @@ namespace AccountManager.Forms
 
     private void SaveButton_Click(object sender, EventArgs e)
     {
-      ValidateChildren();
-
-      RegisterFields(out bool valid);
-      if (!valid) return;
+      if (!ValidateForm())
+        return;
 
       _userResult = new Models.User(
-        firstName: firstNameBox.Text,
-        lastName: lastNameBox.Text,
-        email: emailBox.Text,
-        phone: phoneBox.Text,
-        birthDate: birthDatePicker.Value
-        );
+          firstName: firstNameBox.Text,
+          lastName: lastNameBox.Text,
+          email: emailBox.Text,
+          phone: phoneBox.Text,
+          birthDate: birthDatePicker.Value
+      );
 
       DialogResult = DialogResult.OK;
       Close();
     }
 
-    #region Fields Registration
+    #region Frontend Validation
 
-    private void RegisterFields(out bool valid)
+    private bool ValidateForm()
     {
-      _fields = new Dictionary<string, KeyValuePair<string, bool>>
+      _fieldErrors.Clear();
+
+      ValidateField("Имя", firstNameBox.Text, Validator.IsValidName);
+      ValidateField("Фамилия", lastNameBox.Text, Validator.IsValidName);
+      ValidateField("Email", emailBox.Text, Validator.IsValidEmailMailAddress);
+      ValidateField("Телефон", phoneBox.Text, Validator.IsValidPhone);
+
+      if (_fieldErrors.Count > 0)
       {
-        {
-          "Имя",
-          new KeyValuePair<string, bool>(firstNameBox.Text, _validFirstName)
-        },
-
-        {
-          "Фамилия",
-          new KeyValuePair<string, bool>(lastNameBox.Text, _validLastName)
-        },
-
-        {
-          "Email",
-          new KeyValuePair<string, bool>(emailBox.Text, _validEmail)
-        },
-
-        {
-          "Телефон",
-          new KeyValuePair<string, bool>(phoneBox.Text, _validPhone)
-        },
-
-        {
-          "Дата рождения",
-          new KeyValuePair<string, bool>(birthDatePicker.Text, true)
-        }
-      };
-
-      valid = ValidateFields();
-    }
-
-    private bool ValidateFields()
-    {
-      foreach (var item in _fields)
-      {
-        var fieldName = item.Value.Key;
-        var valid = item.Value.Value;
-
-        if (string.IsNullOrWhiteSpace(fieldName))
-        {
-          ShowErrorBox(item);
-          return false;
-        }
-        else if (!valid)
-        {
-          ShowErrorBox(item);
-          return false;
-        }
+        ShowFirstError();
+        return false;
       }
 
       return true;
     }
 
-    private static void ShowErrorBox(KeyValuePair<string, KeyValuePair<string, bool>> item)
+    private void ValidateField(
+    string fieldName,
+    string value,
+    ValidatorDelegate validator)
+    {
+      if (!validator(value, out var errorCode))
+      {
+        _fieldErrors[fieldName] = errorCode;
+      }
+    }
+
+    private void ShowFirstError()
+    {
+      foreach (var kvp in _fieldErrors)
+      {
+        var fieldName = kvp.Key;
+        var errorCode = kvp.Value;
+
+        var message = ErrorMessages.Get(errorCode);
+
+        ShowMessage(fieldName, message, "Ошибка");
+
+        break;
+      }
+    }
+
+    private static void ShowMessage(string fieldName, string message, string extra)
     {
       MessageBox.Show(
-        $"Неправильно введено поле: {item.Key}.",
-        "Ошибка",
-        MessageBoxButtons.OK,
-        MessageBoxIcon.Error
-        );
+          $"{fieldName}: {message}",
+          $"{extra}",
+          MessageBoxButtons.OK,
+          MessageBoxIcon.Error
+      );
     }
 
     #endregion
@@ -146,21 +133,5 @@ namespace AccountManager.Forms
       cancelButton.Click -= CancelButton_Click;
       saveButton.Click -= SaveButton_Click;
     }
-
-    #region Per-form validation
-
-    private void FirstNameBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
-      _validFirstName = Validator.IsValidName(firstNameBox.Text);
-
-    private void LastNameBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
-      _validLastName = Validator.IsValidName(lastNameBox.Text);
-
-    private void EmailBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
-      _validEmail = Validator.IsValidEmail(emailBox.Text);
-
-    private void PhoneBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
-      _validPhone = Validator.IsValidPhone(phoneBox.Text);
-
-    #endregion
   }
 }
