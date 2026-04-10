@@ -98,6 +98,7 @@ namespace AccountManager.Forms
       this.firstNameBox.Name = "firstNameBox";
       this.firstNameBox.Size = new System.Drawing.Size(244, 26);
       this.firstNameBox.TabIndex = 1;
+      this.firstNameBox.Validating += new System.ComponentModel.CancelEventHandler(this.FirstNameBox_Validating);
       // 
       // labelLastName
       // 
@@ -115,6 +116,7 @@ namespace AccountManager.Forms
       this.lastNameBox.Name = "lastNameBox";
       this.lastNameBox.Size = new System.Drawing.Size(244, 26);
       this.lastNameBox.TabIndex = 3;
+      this.lastNameBox.Validating += new System.ComponentModel.CancelEventHandler(this.LastNameBox_Validating);
       // 
       // labelEmail
       // 
@@ -132,6 +134,7 @@ namespace AccountManager.Forms
       this.emailBox.Name = "emailBox";
       this.emailBox.Size = new System.Drawing.Size(244, 26);
       this.emailBox.TabIndex = 5;
+      this.emailBox.Validating += new System.ComponentModel.CancelEventHandler(this.EmailBox_Validating);
       // 
       // labelPhone
       // 
@@ -149,6 +152,7 @@ namespace AccountManager.Forms
       this.phoneBox.Name = "phoneBox";
       this.phoneBox.Size = new System.Drawing.Size(244, 26);
       this.phoneBox.TabIndex = 7;
+      this.phoneBox.Validating += new System.ComponentModel.CancelEventHandler(this.PhoneBox_Validating);
       // 
       // labelBirthDate
       // 
@@ -211,6 +215,7 @@ namespace AccountManager.Forms
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(402, 316);
       this.Name = "UserEditForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Пользователь";

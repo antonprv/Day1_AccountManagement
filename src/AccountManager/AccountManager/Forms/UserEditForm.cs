@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using AccountManager.Services;
+
 namespace AccountManager.Forms
 {
   public partial class UserEditForm : Form
@@ -13,7 +15,12 @@ namespace AccountManager.Forms
 
     private Models.User _userResult;
 
-    private Dictionary<string, string> _fields;
+    private Dictionary<string, KeyValuePair<string, bool>> _fields;
+
+    private bool _validFirstName;
+    private bool _validLastName;
+    private bool _validEmail;
+    private bool _validPhone;
 
     public UserEditForm()
     {
@@ -48,6 +55,8 @@ namespace AccountManager.Forms
 
     private void SaveButton_Click(object sender, EventArgs e)
     {
+      ValidateChildren();
+
       RegisterFields(out bool valid);
       if (!valid) return;
 
@@ -67,13 +76,32 @@ namespace AccountManager.Forms
 
     private void RegisterFields(out bool valid)
     {
-      _fields = new Dictionary<string, string>
+      _fields = new Dictionary<string, KeyValuePair<string, bool>>
       {
-        { "Имя", firstNameBox.Text },
-        { "Фамилия", lastNameBox.Text },
-        { "Email", emailBox.Text },
-        { "Телефон", phoneBox.Text },
-        { "Дата рождения", birthDatePicker.Text }
+        {
+          "Имя",
+          new KeyValuePair<string, bool>(firstNameBox.Text, _validFirstName)
+        },
+
+        {
+          "Фамилия",
+          new KeyValuePair<string, bool>(lastNameBox.Text, _validLastName)
+        },
+
+        {
+          "Email",
+          new KeyValuePair<string, bool>(emailBox.Text, _validEmail)
+        },
+
+        {
+          "Телефон",
+          new KeyValuePair<string, bool>(phoneBox.Text, _validPhone)
+        },
+
+        {
+          "Дата рождения",
+          new KeyValuePair<string, bool>(birthDatePicker.Text, true)
+        }
       };
 
       valid = ValidateFields();
@@ -83,20 +111,32 @@ namespace AccountManager.Forms
     {
       foreach (var item in _fields)
       {
-        if (string.IsNullOrEmpty(item.Value))
-        {
-          MessageBox.Show(
-            $"Неправильно введено поле: {item.Key}.",
-            "Ошибка",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Error
-            );
+        var fieldName = item.Value.Key;
+        var valid = item.Value.Value;
 
+        if (string.IsNullOrWhiteSpace(fieldName))
+        {
+          ShowErrorBox(item);
+          return false;
+        }
+        else if (!valid)
+        {
+          ShowErrorBox(item);
           return false;
         }
       }
 
       return true;
+    }
+
+    private static void ShowErrorBox(KeyValuePair<string, KeyValuePair<string, bool>> item)
+    {
+      MessageBox.Show(
+        $"Неправильно введено поле: {item.Key}.",
+        "Ошибка",
+        MessageBoxButtons.OK,
+        MessageBoxIcon.Error
+        );
     }
 
     #endregion
@@ -106,5 +146,21 @@ namespace AccountManager.Forms
       cancelButton.Click -= CancelButton_Click;
       saveButton.Click -= SaveButton_Click;
     }
+
+    #region Per-form validation
+
+    private void FirstNameBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
+      _validFirstName = Validator.IsValidName(firstNameBox.Text);
+
+    private void LastNameBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
+      _validLastName = Validator.IsValidName(lastNameBox.Text);
+
+    private void EmailBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
+      _validEmail = Validator.IsValidEmail(emailBox.Text);
+
+    private void PhoneBox_Validating(object sender, System.ComponentModel.CancelEventArgs e) =>
+      _validPhone = Validator.IsValidPhone(phoneBox.Text);
+
+    #endregion
   }
 }

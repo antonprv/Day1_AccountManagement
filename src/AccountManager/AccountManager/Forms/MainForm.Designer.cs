@@ -113,6 +113,7 @@ namespace AccountManager.Forms
       this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
       this.dataGridView.Size = new System.Drawing.Size(900, 484);
       this.dataGridView.TabIndex = 1;
+      this.dataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_CellMouseDoubleClick);
       this.dataGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_ColumnHeaderMouseClick);
       this.dataGridView.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridView_RowHeaderMouseClick);
       this.dataGridView.SelectionChanged += new System.EventHandler(this.DataGridView_SelectionChanged);

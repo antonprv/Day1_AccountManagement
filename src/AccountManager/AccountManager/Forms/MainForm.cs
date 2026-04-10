@@ -14,9 +14,13 @@ namespace AccountManager.Forms
     private readonly List<Models.User> _users =
       new List<Models.User>();
 
+    private readonly List<Models.User> _selectedUsers =
+      new List<Models.User>();
+
     private readonly Services.UserXMLService _service;
-    private Models.User _selectedUser;
+
     private bool _searchBoxBusy;
+
     private ContextMenuStrip _contextMenu;
     private readonly string _defaultSearchBoxText;
 
@@ -93,11 +97,10 @@ namespace AccountManager.Forms
 
     #endregion
 
-
     #region Grid Selections
 
     private void DataGridView_SelectionChanged(object sender, EventArgs e) =>
-      _selectedUser = GetSelectedUser();
+      FillSelectedUsers();
 
     #endregion
 
@@ -118,8 +121,8 @@ namespace AccountManager.Forms
           ? _users
           : _users.Where(u =>
               u.FirstName.ToLower().Contains(query) ||
-              u.LastName.ToLower().Contains(query)  ||
-              u.Email.ToLower().Contains(query)     ||
+              u.LastName.ToLower().Contains(query) ||
+              u.Email.ToLower().Contains(query) ||
               u.Phone.Contains(query)).ToList();
 
       dataGridView.DataSource = new BindingList<Models.User>(filtered);
@@ -128,29 +131,31 @@ namespace AccountManager.Forms
 
     private void DeleteButton_Click(object sender, EventArgs e)
     {
-      if (_selectedUser == null) return;
+      if (!IsSelectionValid()) return;
 
       using (var form = new DeleteDialog())
       {
         if (form.ShowDialog() == DialogResult.OK)
         {
-          _users.Remove(_selectedUser);
+          _users.RemoveAll(u => _selectedUsers.Contains(u));
 
           _service.Save(_users);
           RefreshGrid();
         }
       }
     }
-
+    
     private void EditButton_Click(object sender, EventArgs e)
     {
-      if (_selectedUser == null) return;
+      if (!IsSelectionValid()) return;
 
-      using (var form = new UserEditForm(_selectedUser))
+      if (_selectedUsers.Count > 1) return;
+
+      using (var form = new UserEditForm(_selectedUsers[0]))
       {
         if (form.ShowDialog() == DialogResult.OK)
         {
-          _users[_users.IndexOf(_selectedUser)] = form.Result;
+          _users[_users.IndexOf(_selectedUsers[0])] = form.Result;
           _service.Save(_users);
           RefreshGrid();
         }
@@ -181,11 +186,26 @@ namespace AccountManager.Forms
       _searchBoxBusy = false;
     }
 
-    private Models.User GetSelectedUser()
+    private void FillSelectedUsers()
     {
-      if (dataGridView.CurrentRow == null) return null;
-      return dataGridView.CurrentRow.DataBoundItem as Models.User;
+      _selectedUsers.Clear();
+
+      var rows = dataGridView.SelectedCells
+          .Cast<DataGridViewCell>()
+          .Select(c => c.OwningRow)
+          .Distinct();
+
+      foreach (var row in rows)
+      {
+        if (row.DataBoundItem is Models.User user)
+        {
+          _selectedUsers.Add(user);
+        }
+      }
     }
+
+    private bool IsSelectionValid() =>
+  _selectedUsers != null && _selectedUsers.Count != 0;
 
     private void RefreshGrid()
     {
@@ -248,6 +268,13 @@ namespace AccountManager.Forms
       foreach (DataGridViewCell cell in dataGridView.Rows[e.RowIndex].Cells)
         cell.Selected = true;
     }
+
+    #endregion
+
+    #region Mouse Events
+
+    private void DataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) =>
+  EditButton_Click(sender, e);
 
     #endregion
   }

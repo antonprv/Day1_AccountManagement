@@ -42,9 +42,10 @@ namespace AccountManager.Forms
       // 
       // messageLabel
       // 
-      this.messageLabel.Location = new System.Drawing.Point(12, 20);
+      this.messageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.messageLabel.Location = new System.Drawing.Point(0, 0);
       this.messageLabel.Name = "messageLabel";
-      this.messageLabel.Size = new System.Drawing.Size(360, 50);
+      this.messageLabel.Size = new System.Drawing.Size(276, 85);
       this.messageLabel.TabIndex = 0;
       this.messageLabel.Text = "Вы уверены?";
       this.messageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -55,9 +56,9 @@ namespace AccountManager.Forms
       this.confirmButton.Dock = System.Windows.Forms.DockStyle.Right;
       this.confirmButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.confirmButton.ForeColor = System.Drawing.Color.White;
-      this.confirmButton.Location = new System.Drawing.Point(284, 5);
+      this.confirmButton.Location = new System.Drawing.Point(166, 5);
       this.confirmButton.Name = "confirmButton";
-      this.confirmButton.Size = new System.Drawing.Size(90, 35);
+      this.confirmButton.Size = new System.Drawing.Size(100, 35);
       this.confirmButton.TabIndex = 1;
       this.confirmButton.Text = "Удалить";
       this.confirmButton.UseVisualStyleBackColor = false;
@@ -65,10 +66,10 @@ namespace AccountManager.Forms
       // 
       // cancelButton
       // 
-      this.cancelButton.Dock = System.Windows.Forms.DockStyle.Right;
-      this.cancelButton.Location = new System.Drawing.Point(204, 5);
+      this.cancelButton.Dock = System.Windows.Forms.DockStyle.Left;
+      this.cancelButton.Location = new System.Drawing.Point(10, 5);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(80, 35);
+      this.cancelButton.Size = new System.Drawing.Size(100, 35);
       this.cancelButton.TabIndex = 0;
       this.cancelButton.Text = "Отмена";
       this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
@@ -81,17 +82,19 @@ namespace AccountManager.Forms
       this.buttonPanel.Location = new System.Drawing.Point(0, 85);
       this.buttonPanel.Name = "buttonPanel";
       this.buttonPanel.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
-      this.buttonPanel.Size = new System.Drawing.Size(384, 45);
+      this.buttonPanel.Size = new System.Drawing.Size(276, 45);
       this.buttonPanel.TabIndex = 1;
       // 
       // DeleteDialog
       // 
-      this.ClientSize = new System.Drawing.Size(384, 130);
+      this.ClientSize = new System.Drawing.Size(276, 130);
       this.Controls.Add(this.messageLabel);
       this.Controls.Add(this.buttonPanel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(298, 186);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(298, 186);
       this.Name = "DeleteDialog";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Удаление пользователя";
